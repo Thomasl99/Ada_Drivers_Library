@@ -41,7 +41,13 @@ package MicroBit.MotorDriver is
                        Turning,
                        Lateral_Left,
                        Rotating_Left,
-                       Stop);
+                       Stop,
+                       Forward_Right,
+                       Backward_Right,
+                       Backward_Turning,
+                       Lateral_Right,
+                       Rotating_Right,
+                       Backward);
 
    type Speeds is record
       rf: UInt12;
