@@ -77,7 +77,12 @@ package body MicroBit.MotorDriver is
                          rb => (0, 0),
                          lf => (0, 0),
                          lb => (0, Speed.lb));
-         when Turning => --Same as Forward, wheelspeed left < wheelspeed right results in curved left
+         when Turning_Left => --Same as Forward, wheelspeed left < wheelspeed right results in curved left
+            Drive_Wheels(rf => (Speed.rf, 0),
+                         rb => (Speed.rb, 0),
+                         lf => (Speed.lf, 0),
+                         lb => (Speed.lb ,0));
+                     when Turning_Right => --Same as Forward, wheelspeed left < wheelspeed right results in curved left
             Drive_Wheels(rf => (Speed.rf, 0),
                          rb => (Speed.rb, 0),
                          lf => (Speed.lf, 0),
@@ -89,9 +94,9 @@ package body MicroBit.MotorDriver is
                          lb => (0, 0));
          when Rotating_Left => --same as left?
             Drive_Wheels(rf => (Speed.rf,0),
-                         rb => (0,Speed.rb),
+                         rb => (speed.rb,0),
                          lf => (0,Speed.lf),
-                         lb => (Speed.lb, 0));
+                         lb => (0, speed.lb));
          when Stop =>
             Drive_Wheels(rf => (0, 0),
                          rb => (0, 0),
@@ -119,9 +124,9 @@ package body MicroBit.MotorDriver is
                          lb => (0, 0));
          when Rotating_Right => --same as Right? Setup because there was a Rotating_Left
             Drive_Wheels(rf => (0, Speed.rf),
-                         rb => (Speed.rb, 0),
+                         rb => (0, speed.rb),
                          lf => (Speed.lf ,0),
-                         lb => (0, Speed.lb));
+                         lb => (speed.lb, 0));
          when Backward =>
             Drive_Wheels(rf => (0, speed.rf),
                          rb => (0, speed.rb),
