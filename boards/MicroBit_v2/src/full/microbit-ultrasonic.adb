@@ -1,4 +1,5 @@
 with MicroBit.TimeHighspeed; use MicroBit.TimeHighspeed;
+with MicroBit.Console; use MicroBit.Console;
 package body MicroBit.Ultrasonic is
    Trigger : GPIO_Point;
    Echo  : GPIO_Point;
@@ -50,7 +51,8 @@ package body MicroBit.Ultrasonic is
       --see polling example: https://learn.adacore.com/courses/intro-to-embedded-sys-prog/chapters/handling_interrupts.html#interrupt-handlers
 
       --wait for echo to start (should take about 200us to send 8x40KHz burst and after that it is set to high automatically by sensor)
-      IsTimeout := Wait_For_Start_Blocking_Using_Polling_With_Timeout(Milliseconds(3)); --max 3 ms blocking wait
+      --IsTimeout := Wait_For_Start_Blocking_Using_Polling_With_Timeout(Milliseconds(3)); --max 3 ms blocking wait
+      Delay_Us(700);
 
       --wait for echo to end
       if not IsTimeout then
@@ -87,15 +89,16 @@ is
       Deadline : constant Time := Clock + Timeout_Ms;
       IsTimeOut: Boolean := False;
    begin
+        Put_Line("Start B");
       --use a named loop so we can call "exit named loop when" instead of "while .. "
    Polling: loop
       exit Polling when Echo.Set = True;
       if Clock >= Deadline then
             Echo.Clear;
             IsTimeOut := True;
-      end if;
+         end if;
    end loop Polling;
-
+       Put_Line("End B");
       return IsTimeOut;
    end Wait_For_Start_Blocking_Using_Polling_With_Timeout;
 
